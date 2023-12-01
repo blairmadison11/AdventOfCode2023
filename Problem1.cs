@@ -1,4 +1,3 @@
-﻿// See https://aka.ms/new-console-template for more information
 using (StreamReader reader = new StreamReader("D:\\input.txt"))
 {
     int total = 0;
