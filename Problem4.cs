@@ -14,7 +14,6 @@ namespace Program
             {
                 while (!reader.EndOfStream)
                 {
-                    bool possibleFlag = true;
                     string line = reader.ReadLine();
                     Game game = new Game();
                     Match match1 = Regex.Match(line, PATTERN1);
