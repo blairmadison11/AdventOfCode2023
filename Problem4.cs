@@ -41,15 +41,7 @@ namespace Program
 
         public void UpdateMin(int count, string color)
         {
-            if (cubeCounts.ContainsKey(color))
-            {
-                int current = cubeCounts[color];
-                if (count > current)
-                {
-                    cubeCounts[color] = count;
-                }
-            }
-            else
+            if (!cubeCounts.ContainsKey(color) || cubeCounts[color] < count)
             {
                 cubeCounts[color] = count;
             }
