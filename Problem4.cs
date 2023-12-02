@@ -19,7 +19,6 @@ namespace Program
                     Match match1 = Regex.Match(line, PATTERN1);
                     foreach (Capture capture in match1.Groups[2].Captures)
                     {
-                        
                         Match match2 = Regex.Match(capture.Value, PATTERN2);
                         CaptureCollection counts = match2.Groups[2].Captures;
                         CaptureCollection colors = match2.Groups[3].Captures;
