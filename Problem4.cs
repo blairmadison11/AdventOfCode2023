@@ -1,4 +1,4 @@
-﻿using System.Text.RegularExpressions;
+using System.Text.RegularExpressions;
 
 namespace Program
 {
@@ -15,7 +15,7 @@ namespace Program
                 while (!reader.EndOfStream)
                 {
                     string line = reader.ReadLine();
-                    Game game = new Game();
+                    Dictionary<string, int> cubeCounts = new Dictionary<string, int>();
                     Match match1 = Regex.Match(line, PATTERN1);
                     foreach (Capture capture in match1.Groups[2].Captures)
                     {
@@ -24,36 +24,23 @@ namespace Program
                         CaptureCollection colors = match2.Groups[3].Captures;
                         for (int i = 0; i < colors.Count; ++i)
                         {
-                            game.UpdateMin(int.Parse(counts[i].Value), colors[i].Value);
+                            int count = int.Parse(counts[i].Value);
+                            string color = colors[i].Value;
+                            if (!cubeCounts.ContainsKey(colors[i].Value) || cubeCounts[color] < count)
+                            {
+                                cubeCounts[color] = count;
+                            }
                         }
                     }
-                    powerSum += game.GetPower();
+                    int power = 1;
+                    foreach (string color in cubeCounts.Keys)
+                    {
+                        power *= cubeCounts[color];
+                    }
+                    powerSum += power;
                 }
             }
             Console.WriteLine(powerSum);
-        }
-    }
-
-    public class Game
-    {
-        private Dictionary<string, int> cubeCounts = new Dictionary<string, int>();
-
-        public void UpdateMin(int count, string color)
-        {
-            if (!cubeCounts.ContainsKey(color) || cubeCounts[color] < count)
-            {
-                cubeCounts[color] = count;
-            }
-        }
-
-        public int GetPower()
-        {
-            int power = 1;
-            foreach (string color in cubeCounts.Keys)
-            {
-                power *= cubeCounts[color];
-            }
-            return power;
         }
     }
 }
