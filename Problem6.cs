@@ -48,14 +48,11 @@ namespace Program
                             }
                         }
                     }
+                    
                     if (partNums.Count == 2)
                     {
-                        int gearRatio = 1;
-                        foreach (int num in partNums.Values)
-                        {
-                            gearRatio *= num;
-                        }
-                        sum += gearRatio;
+                        int[] nums = partNums.Values.ToArray();
+                        sum += nums[0] * nums[1];
                     }
                 }
             }
