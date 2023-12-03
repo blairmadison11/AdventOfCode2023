@@ -33,9 +33,9 @@ namespace Program
                         }
                     }
                     int power = 1;
-                    foreach (string color in cubeCounts.Keys)
+                    foreach (int count in cubeCounts.Values)
                     {
-                        power *= cubeCounts[color];
+                        power *= count;
                     }
                     powerSum += power;
                 }
