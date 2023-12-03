@@ -1,4 +1,4 @@
-﻿using System.Text.RegularExpressions;
+using System.Text.RegularExpressions;
 
 namespace Program
 {
@@ -38,13 +38,13 @@ namespace Program
                 foreach (Match gear in gears)
                 {
                     Dictionary<Match, int> partNums = new Dictionary<Match, int>();
-                    for (int j = i - 1; j <= i + 1; ++j)
+                    foreach (Match[] row in numGrid[(i - 1)..(i + 2)])
                     {
-                        for (int k = gear.Index - 1; k <= gear.Index + 1; ++k)
+                        foreach (Match m in row[(gear.Index - 1)..(gear.Index + 2)])
                         {
-                            if (numGrid[j][k] != null)
+                            if (m != null && !partNums.ContainsKey(m))
                             {
-                                partNums[numGrid[j][k]] = int.Parse(numGrid[j][k].Value);
+                                partNums[m] = int.Parse(m.Value);
                             }
                         }
                     }
