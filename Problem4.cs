@@ -26,7 +26,7 @@ namespace Program
                         {
                             int count = int.Parse(counts[i].Value);
                             string color = colors[i].Value;
-                            if (!cubeCounts.ContainsKey(colors[i].Value) || cubeCounts[color] < count)
+                            if (!cubeCounts.ContainsKey(color) || cubeCounts[color] < count)
                             {
                                 cubeCounts[color] = count;
                             }
