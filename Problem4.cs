@@ -1,34 +1,19 @@
 using System.Text.RegularExpressions;
 
-int powerSum = 0;
-using (StreamReader reader = new StreamReader("D:\\input.txt"))
+var powerSum = 0;
+foreach (var line in File.ReadAllLines("D:\\input.txt"))
 {
-    while (!reader.EndOfStream)
+    var cubeCounts = new Dictionary<string, int>();
+    var match = Regex.Match(line, @"Game (\d*): (?:((\d*) (red|green|blue),?\s?)+;?\s?)+");
+    var counts = Array.ConvertAll(match.Groups[3].Captures.ToArray(), s => int.Parse(s.Value));
+    var colors = Array.ConvertAll(match.Groups[4].Captures.ToArray(), s => s.Value);
+    for (var i = 0; i < counts.Length; ++i)
     {
-        string line = reader.ReadLine();
-        Dictionary<string, int> cubeCounts = new Dictionary<string, int>();
-        Match match1 = Regex.Match(line, @"Game (\d*): (?:([^;]*);?\s?)+");
-        foreach (Capture capture in match1.Groups[2].Captures)
+        if (!cubeCounts.ContainsKey(colors[i]) || cubeCounts[colors[i]] < counts[i])
         {
-            Match match2 = Regex.Match(capture.Value, @"((\d*) (red|green|blue),?\s?)+");
-            CaptureCollection counts = match2.Groups[2].Captures;
-            CaptureCollection colors = match2.Groups[3].Captures;
-            for (int i = 0; i < colors.Count; ++i)
-            {
-                int count = int.Parse(counts[i].Value);
-                string color = colors[i].Value;
-                if (!cubeCounts.ContainsKey(color) || cubeCounts[color] < count)
-                {
-                    cubeCounts[color] = count;
-                }
-            }
+            cubeCounts[colors[i]] = counts[i];
         }
-        int power = 1;
-        foreach (int count in cubeCounts.Values)
-        {
-            power *= count;
-        }
-        powerSum += power;
     }
+    powerSum += cubeCounts.Values.Aggregate((x, y) => x * y);
 }
 Console.WriteLine(powerSum);
