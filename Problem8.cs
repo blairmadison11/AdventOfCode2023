@@ -1,23 +1,16 @@
-﻿using System.Text.RegularExpressions;
+using System.Text.RegularExpressions;
 
-using (StreamReader reader = new StreamReader("D:\\input.txt"))
+string[] lines = File.ReadAllLines("D:\\input.txt");
+int[] cards = Enumerable.Repeat(1, lines.Length).ToArray();
+for (int i = 0; i < lines.Length; i++)
 {
-    List<int> points = new List<int>();
-    while (!reader.EndOfStream)
+    Match parse = Regex.Match(lines[i], @"Card\s+\d+:\s+((\d+)\s*)+\|\s+((\d+)\s*)+");
+    HashSet<int> winningNums = new HashSet<int>(Array.ConvertAll(parse.Groups[2].Captures.ToArray(), s => int.Parse(s.Value)));
+    HashSet<int> scratchNums = new HashSet<int>(Array.ConvertAll(parse.Groups[4].Captures.ToArray(), s => int.Parse(s.Value)));
+    int points = scratchNums.Intersect(winningNums).Count();
+    for (int j = i + 1; j < i + points + 1; ++j)
     {
-        Match parse = Regex.Match(reader.ReadLine(), @"Card\s+\d+:\s+((\d+)\s*)+\|\s+((\d+)\s*)+");
-        HashSet<int> winningNums = new HashSet<int>(Array.ConvertAll(parse.Groups[2].Captures.ToArray(), s => int.Parse(s.Value)));
-        HashSet<int> scratchNums = new HashSet<int>(Array.ConvertAll(parse.Groups[4].Captures.ToArray(), s => int.Parse(s.Value)));
-        points.Add(scratchNums.Intersect(winningNums).Count());
+        cards[j] += cards[i];
     }
-
-    int[] cards = Enumerable.Repeat(1, points.Count).ToArray();
-    for (int i = 0; i < points.Count; ++i)
-    {
-        for (int j = i + 1; j < i + 1 + points[i]; ++j)
-        {
-            cards[j] += cards[i];
-        }
-    }
-    Console.WriteLine(cards.Sum());
 }
+Console.WriteLine(cards.Sum());
