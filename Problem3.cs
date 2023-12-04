@@ -1,7 +1,7 @@
 using System.Text.RegularExpressions;
 
 var sum = 0;
-var maxVals = new Dictionary<string, int>() { { "red", 12 }, { "green", 13 }, { "blue", 14 } };
+var maxVals = new Dictionary<string, int>() {{"red", 12},{"green", 13},{"blue", 14}};
 foreach (var line in File.ReadAllLines("D:\\input.txt"))
 {
     var match = Regex.Match(line, @"Game (\d*): (?:((\d*) (red|green|blue),?\s?)+;?\s?)+");
