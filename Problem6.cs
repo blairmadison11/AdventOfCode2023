@@ -2,13 +2,7 @@ using System.Text.RegularExpressions;
 
 List<string> lines = new List<string>();
 lines.Add(new string('.', 142));
-using (StreamReader reader = new StreamReader("D:\\input.txt"))
-{
-    while (!reader.EndOfStream)
-    {
-        lines.Add(string.Format(".{0}.", reader.ReadLine()));
-    }
-}
+lines.AddRange(File.ReadAllLines("D:\\input.txt").Select(line => string.Format(".{0}.", line)));
 lines.Add(new string('.', 142));
 
 int sum = 0;
