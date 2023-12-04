@@ -1,30 +1,8 @@
-using (StreamReader reader = new StreamReader("D:\\input.txt"))
-{
-    int total = 0;
-    while (!reader.EndOfStream)
-    {
-        int num = 0;
-        string line = reader.ReadLine();
-        for (int i = 0; i < line.Length; ++i)
-        {
-            char c = line[i];
-            if (Char.IsDigit(c))
-            {
-                num = (c - '0') * 10;
-                break;
-            }
-        }
+using System.Text.RegularExpressions;
 
-        for (int i = line.Length - 1; i >= 0; --i)
-        {
-            char c = line[i];
-            if (Char.IsDigit(c))
-            {
-                num += (c - '0');
-                break;
-            }
-        }
-        total += num;
-    }
-    Console.WriteLine(total);
+int total = 0;
+foreach (string line in File.ReadAllLines("D:\\input.txt"))
+{
+    total += (int.Parse(Regex.Match(line, "\\d").Value) * 10) + int.Parse(Regex.Match(line, "\\d", RegexOptions.RightToLeft).Value);
 }
+Console.WriteLine(total);
