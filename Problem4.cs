@@ -1,6 +1,6 @@
 using System.Text.RegularExpressions;
 
-var powerSum = 0;
+var sum = 0;
 foreach (var line in File.ReadAllLines("D:\\input.txt"))
 {
     var cubeCounts = new Dictionary<string, int>();
@@ -14,6 +14,6 @@ foreach (var line in File.ReadAllLines("D:\\input.txt"))
             cubeCounts[colors[i]] = counts[i];
         }
     }
-    powerSum += cubeCounts.Values.Aggregate((x, y) => x * y);
+    sum += cubeCounts.Values.Aggregate((x, y) => x * y);
 }
-Console.WriteLine(powerSum);
+Console.WriteLine(sum);
