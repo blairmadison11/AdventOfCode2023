@@ -1,26 +1,18 @@
 using System.Text.RegularExpressions;
 
-List<string> lines = new List<string>();
-lines.Add(new string('.', 142));
-using (StreamReader reader = new StreamReader("D:\\input.txt"))
+var sum = 0;
+var lines = new List<string>();
+lines.AddRange(File.ReadAllLines("D:\\input.txt").Select(line => string.Format(".{0}.", line)));
+lines.Insert(0, new string('.', lines[0].Length));
+lines.Add(new string('.', lines[0].Length));
+for (var i = 1; i < lines.Count - 1; ++i)
 {
-    while (!reader.EndOfStream)
+    foreach (Match match in Regex.Matches(lines[i], @"\d+"))
     {
-        lines.Add(string.Format(".{0}.", reader.ReadLine()));
-    }
-}
-lines.Add(new string('.', 142));
-
-int sum = 0;
-for (int i = 1; i < lines.Count - 1; ++i)
-{
-    MatchCollection matches = Regex.Matches(lines[i], @"\d+");
-    foreach (Match match in matches)
-    {
-        int startX = match.Index - 1, length = match.Length + 2, endX = match.Index + match.Length;
-        if (Regex.IsMatch(lines[i - 1].Substring(startX, length), @"[^.\d]") ||
-            Regex.IsMatch(lines[i + 1].Substring(startX, length), @"[^.\d]") ||
-                lines[i][startX] != '.' || lines[i][endX] != '.')
+        int x1 = match.Index - 1, x2 = match.Index + match.Length + 1;
+        if (Regex.IsMatch(lines[i - 1][x1..x2], @"[^.\d]") ||
+            Regex.IsMatch(lines[i + 1][x1..x2], @"[^.\d]") ||
+                lines[i][x1] != '.' || lines[i][x2 - 1] != '.')
         {
             sum += int.Parse(match.Value);
         }
