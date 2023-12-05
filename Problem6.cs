@@ -1,32 +1,30 @@
 using System.Text.RegularExpressions;
 
-List<string> lines = new List<string>();
-lines.Add(new string('.', 142));
-lines.AddRange(File.ReadAllLines("D:\\input.txt").Select(line => string.Format(".{0}.", line)));
-lines.Add(new string('.', 142));
+var sum = 0;
+var lines = new List<string>(File.ReadAllLines("D:\\input.txt").Select(line => string.Format(".{0}.", line)));
+var x = lines[0].Length;
+lines.Insert(0, new string('.', x));
+lines.Add(new string('.', x));
 
-int sum = 0;
-Match[][] numGrid = new Match[142][];
+var grid = new Match[x][];
 for (int i = 1; i < lines.Count - 1; ++i)
 {
-    numGrid[i] = new Match[142];
-    MatchCollection numbers = Regex.Matches(lines[i], @"\d+");
-    foreach (Match number in numbers)
+    grid[i] = new Match[x];
+    foreach (Match number in Regex.Matches(lines[i], @"\d+"))
     {
         for (int j = number.Index; j < number.Index + number.Length; ++j)
         {
-            numGrid[i][j] = number;
+            grid[i][j] = number;
         }
     }
 }
 
 for (int i = 1; i < lines.Count - 1; ++i)
 {
-    MatchCollection gears = Regex.Matches(lines[i], @"\*");
-    foreach (Match gear in gears)
+    foreach (Match gear in Regex.Matches(lines[i], @"\*"))
     {
         Dictionary<Match, int> partNums = new Dictionary<Match, int>();
-        foreach (Match[] row in numGrid[(i - 1)..(i + 2)])
+        foreach (Match[] row in grid[(i - 1)..(i + 2)])
         {
             foreach (Match m in row[(gear.Index - 1)..(gear.Index + 2)])
             {
@@ -36,12 +34,7 @@ for (int i = 1; i < lines.Count - 1; ++i)
                 }
             }
         }
-
-        if (partNums.Count == 2)
-        {
-            int[] nums = partNums.Values.ToArray();
-            sum += nums[0] * nums[1];
-        }
+        if (partNums.Count == 2) sum += partNums.Values.Aggregate((x, y) => x * y);
     }
 }
 Console.WriteLine(sum);
