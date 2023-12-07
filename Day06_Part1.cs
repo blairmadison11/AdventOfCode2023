@@ -6,14 +6,8 @@ var dists = Array.ConvertAll(Regex.Match(lines[1], @"Distance:\s+(?:(\d+)\s*)+")
 var wins = new List<int>();
 for (var i = 0; i < times.Length; ++i)
 {
-    var curWins = 0;
-    for (var btn = 0; btn < times[i]; ++btn)
-    {
-        if ((times[i] - btn) * btn > dists[i])
-        {
-            ++curWins;
-        }
-    }
-    wins.Add(curWins);
+    var root1 = (int)((-times[i] + Math.Sqrt(Math.Pow(times[i], 2.0) - (4 * dists[i]))) / 2);
+    var root2 = (int)((-times[i] - Math.Sqrt(Math.Pow(times[i], 2.0) - (4 * dists[i]))) / 2);
+    wins.Add(root1 - root2);
 }
 Console.WriteLine(wins.Aggregate((x, y) => x * y));
