@@ -5,8 +5,8 @@ var maxVals = new Dictionary<string, int>() {{"red", 12},{"green", 13},{"blue", 
 foreach (var line in File.ReadAllLines("D:\\input.txt"))
 {
     var match = Regex.Match(line, @"Game (\d*): (?:((\d*) (red|green|blue),?\s?)+;?\s?)+");
-    var counts = Array.ConvertAll(match.Groups[3].Captures.ToArray(), s => int.Parse(s.Value));
-    var colors = Array.ConvertAll(match.Groups[4].Captures.ToArray(), s => s.Value);
+    var counts = match.Groups[3].Captures.Select(s => int.Parse(s.Value));
+    var colors = match.Groups[4].Captures.Select(s => s.Value);
     var possibleFlag = true;
     for (var i = 0; i < counts.Length && possibleFlag; ++i)
     {
