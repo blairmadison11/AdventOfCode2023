@@ -1,8 +1,3 @@
 using System.Text.RegularExpressions;
 
-var total = 0;
-foreach (var line in File.ReadAllLines("D:\\input.txt"))
-{
-    total += (int.Parse(Regex.Match(line, "\\d").Value) * 10) + int.Parse(Regex.Match(line, "\\d", RegexOptions.RightToLeft).Value);
-}
-Console.WriteLine(total);
+Console.WriteLine(File.ReadAllLines("D:\\input.txt").Select(l => (int.Parse(Regex.Match(l, "\\d").Value) * 10) + int.Parse(Regex.Match(l, "\\d", RegexOptions.RightToLeft).Value)).Aggregate((x, y) => x + y));
