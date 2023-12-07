@@ -1,8 +1,8 @@
 using System.Text.RegularExpressions;
 
 var lines = File.ReadAllLines("D:\\input.txt");
-var times = Array.ConvertAll(Regex.Match(lines[0], @"Time:\s+(?:(\d+)\s*)+").Groups[1].Captures.ToArray(), c => int.Parse(c.Value));
-var dists = Array.ConvertAll(Regex.Match(lines[1], @"Distance:\s+(?:(\d+)\s*)+").Groups[1].Captures.ToArray(), c => int.Parse(c.Value));
+var times = Regex.Match(lines[0], @"Time:\s+(?:(\d+)\s*)+").Groups[1].Captures.Select(c => int.Parse(c.Value));
+var dists = Regex.Match(lines[1], @"Distance:\s+(?:(\d+)\s*)+").Groups[1].Captures.Select(c => int.Parse(c.Value));
 var wins = new List<int>();
 for (var i = 0; i < times.Length; ++i)
 {
