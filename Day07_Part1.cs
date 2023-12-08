@@ -1,18 +1,11 @@
 using System.Text.RegularExpressions;
 
-var hands = new List<Hand>();
-foreach (string line in File.ReadAllLines("D:\\input.txt"))
-{
-    var m = Regex.Match(line, @"([2-9TJQKA])+ (\d+)");
-    hands.Add(new Hand(m.Groups[1].Captures.Select(c => c.Value).ToArray(), int.Parse(m.Groups[2].Value)));
-}
+var hands = File.ReadAllLines("D:\\input.txt").Select(l => {
+        var m = Regex.Match(l, @"([2-9TJQKA])+ (\d+)");
+        return new Hand(m.Groups[1].Captures.Select(c => c.Value).ToArray(), int.Parse(m.Groups[2].Value));
+    }).ToList();
 hands.Sort();
-var sum = 0;
-for (var i = 0; i < hands.Count; ++i)
-{
-    sum += hands[i].Bid * (i + 1);
-}
-Console.WriteLine(sum);
+Console.WriteLine(hands.Select((h, i) => h.Bid * (i + 1)).Sum());
 
 class Hand : IComparable<Hand>
 {
