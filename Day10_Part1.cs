@@ -1,6 +1,6 @@
 using System.Text.RegularExpressions;
 
-var lines = new List<string>(File.ReadAllLines("D:\\input.txt").Select(line => string.Format(".{0}", line)));
+var lines = new List<string>(File.ReadAllLines("D:\\input2.txt").Select(line => string.Format(".{0}", line)));
 var x = lines[0].Length;
 lines.Insert(0, new string('.', x));
 
@@ -39,7 +39,7 @@ var sc = start.ConnectionCardinals;
 var paths = new List<List<Pipe>>();
 paths.Add(new List<Pipe>() { start, start.GetConnection(sc[0]) });
 paths.Add(new List<Pipe>() { start, start.GetConnection(sc[1]) });
-while (!paths[0].Contains(paths[1][^1]))
+while (paths[0][^1] != paths[1][^1] && paths[0][^1] != paths[1][^2])
 {
     foreach (var path in paths)
     {
