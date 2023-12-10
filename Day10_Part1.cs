@@ -1,4 +1,4 @@
-var lines = new List<string>(File.ReadAllLines("D:\\input.txt").Select(line => string.Format(".{0}", line)));
+var lines = new List<string>(File.ReadAllLines("D:\\input2.txt").Select(line => string.Format(".{0}", line)));
 var x = lines[0].Length;
 lines.Insert(0, new string('.', x));
 
@@ -13,7 +13,7 @@ for (var i = 0; i < lines.Count; ++i)
         if (c != '.')
         {
             var pipe = new Pipe(c);
-            foreach (Cardinal card in pipe.Cardinals)
+            foreach (Cardinal card in pipe.AvailableCardinals)
             {
                 if (card == Cardinal.N && pipes[i - 1][j] != null)
                 {
@@ -33,7 +33,7 @@ for (var i = 0; i < lines.Count; ++i)
     }
 }
 
-var sc = start.ConnectionCardinals;
+var sc = start.ConnectedCardinals;
 var paths = new List<List<Pipe>>();
 paths.Add(new List<Pipe>() { start, start.GetConnection(sc[0]) });
 paths.Add(new List<Pipe>() { start, start.GetConnection(sc[1]) });
@@ -79,8 +79,8 @@ class Pipe
         cardinals = lookup[c];
     }
 
-    public Cardinal[] Cardinals => cardinals;
-    public Cardinal[] ConnectionCardinals => connections.Keys.ToArray();
+    public Cardinal[] AvailableCardinals => cardinals;
+    public Cardinal[] ConnectedCardinals => connections.Keys.ToArray();
     public bool HasCardinal(Cardinal c) => cardinals.Contains(c);
 
     public void AddConnection(Pipe p, Cardinal c)
