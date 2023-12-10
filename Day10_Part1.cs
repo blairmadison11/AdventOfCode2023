@@ -1,6 +1,6 @@
 using System.Text.RegularExpressions;
 
-var lines = new List<string>(File.ReadAllLines("D:\\input2.txt").Select(line => string.Format(".{0}", line)));
+var lines = new List<string>(File.ReadAllLines("D:\\input.txt").Select(line => string.Format(".{0}", line)));
 var x = lines[0].Length;
 lines.Insert(0, new string('.', x));
 
