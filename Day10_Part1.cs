@@ -67,9 +67,6 @@ using (StreamWriter sw = new StreamWriter("D:\\output.txt"))
     }
 }
 
-Console.WriteLine();
-
-
 enum Cardinal { N, NE, E, SE, S, SW, W, NW };
 class Pipe
 {
