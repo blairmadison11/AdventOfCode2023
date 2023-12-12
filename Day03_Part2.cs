@@ -1,33 +1,32 @@
 using System.Text.RegularExpressions;
 
 var sum = 0;
-var lines = new List<string>(File.ReadAllLines("D:\\input.txt").Select(line => string.Format(".{0}.", line)));
-var x = lines[0].Length;
-lines.Insert(0, new string('.', x));
-lines.Add(new string('.', x));
+var lines = new List<string>(File.ReadAllLines("D:\\input3.txt").Select(line => string.Format(".{0}.", line)));
+lines.Insert(0, new string('.', lines[0].Length));
+lines.Add(new string('.', lines[0].Length));
 
-var grid = new Match[x][];
-for (int i = 1; i < lines.Count - 1; ++i)
+var grid = new Match[lines.Count, lines[0].Length];
+for (var i = 1; i < lines.Count - 1; ++i)
 {
-    grid[i] = new Match[x];
     foreach (Match number in Regex.Matches(lines[i], @"\d+"))
     {
-        for (int j = number.Index; j < number.Index + number.Length; ++j)
+        for (var j = number.Index; j < number.Index + number.Length; ++j)
         {
-            grid[i][j] = number;
+            grid[i, j] = number;
         }
     }
 }
 
-for (int i = 1; i < lines.Count - 1; ++i)
+for (var i = 1; i < lines.Count - 1; ++i)
 {
     foreach (Match gear in Regex.Matches(lines[i], @"\*"))
     {
         Dictionary<Match, int> partNums = new Dictionary<Match, int>();
-        foreach (Match[] row in grid[(i - 1)..(i + 2)])
+        for (var j = i - 1; j <= i + 1; ++j)
         {
-            foreach (Match m in row[(gear.Index - 1)..(gear.Index + 2)])
+            for (var k = gear.Index - 1; k <= gear.Index + 1; ++k)
             {
+                var m = grid[j, k];
                 if (m != null && !partNums.ContainsKey(m))
                 {
                     partNums[m] = int.Parse(m.Value);
