@@ -31,7 +31,6 @@ for (var i = 0; i < lines.Count; ++i)
     }
 }
 
-var pathGrid = new Pipe[pipes.GetLength(0) + 1, pipes.GetLength(1) + 1];
 var sc = start.ConnectedCardinals;
 var paths = new List<List<Pipe>>();
 paths.Add(new List<Pipe>() { start, start.GetConnection(sc[0]) });
@@ -40,14 +39,21 @@ while (paths[0][^1] != paths[1][^1] && paths[0][^1] != paths[1][^2])
 {
     foreach (var path in paths)
     {
-        Pipe p = path[^1].GetNext();
-        pathGrid[p.X, p.Y] = p;
-        path.Add(p);
+        path.Add(path[^1].GetNext());
     }
 }
 Console.WriteLine(paths[0].Count - 1);
 
-// DEBUG OUTPUT
+// START DEBUG OUTPUT
+var pathGrid = new Pipe[pipes.GetLength(0) + 1, pipes.GetLength(1) + 1];
+foreach (var path in paths)
+{
+    foreach (var pipe in path)
+    {
+        pathGrid[pipe.X, pipe.Y] = pipe;
+    }
+}
+
 using (StreamWriter sw = new StreamWriter("D:\\output.txt"))
 {
     for (int i = 0; i < pathGrid.GetLength(0); ++i)
@@ -66,8 +72,9 @@ using (StreamWriter sw = new StreamWriter("D:\\output.txt"))
         sw.WriteLine();
     }
 }
+// END DEBUG OUTPUT
 
-enum Cardinal { N, NE, E, SE, S, SW, W, NW };
+enum Cardinal { N, E, S, W };
 class Pipe
 {
     private static readonly Dictionary<char, Cardinal[]> cardLookup = new Dictionary<char, Cardinal[]>()
@@ -117,7 +124,10 @@ class Pipe
 
     public Cardinal[] AvailableCardinals => cardinals;
     public Cardinal[] ConnectedCardinals => connections.Keys.ToArray();
+    
     public bool HasCardinal(Cardinal c) => cardinals.Contains(c);
+    public bool IsVertical => connections.Keys.Contains(Cardinal.N) || connections.Keys.Contains(Cardinal.S);
+    public bool IsHorizontal => connections.Keys.Contains(Cardinal.W) || connections.Keys.Contains(Cardinal.E);
     public int X => coords.Item1;
     public int Y => coords.Item2;
 
