@@ -109,7 +109,6 @@ class Pipe
 
     public char Symbol;
     public Cardinal Prev;
-    public Cardinal[] sides = new Cardinal[2];
 
     private (int, int) coords;
     private Cardinal[] cardinals;
