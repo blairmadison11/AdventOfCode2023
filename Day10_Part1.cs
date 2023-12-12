@@ -73,7 +73,7 @@ Console.WriteLine();
 enum Cardinal { N, NE, E, SE, S, SW, W, NW };
 class Pipe
 {
-    private static readonly Dictionary<char, Cardinal[]> lookup = new Dictionary<char, Cardinal[]>()
+    private static readonly Dictionary<char, Cardinal[]> cardLookup = new Dictionary<char, Cardinal[]>()
     {
         { '|', new [] { Cardinal.N, Cardinal.S } },
         { '-', new [] { Cardinal.E, Cardinal.W } },
@@ -114,7 +114,7 @@ class Pipe
     public Pipe(char c, (int, int) coords)
     {
         Symbol = symLookup[c];
-        cardinals = lookup[c];
+        cardinals = cardLookup[c];
         this.coords = coords;
     }
 
