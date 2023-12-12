@@ -117,10 +117,7 @@ class Pipe
 
     public Cardinal[] AvailableCardinals => cardinals;
     public Cardinal[] ConnectedCardinals => connections.Keys.ToArray();
-    
     public bool HasCardinal(Cardinal c) => cardinals.Contains(c);
-    public bool IsVertical => connections.Keys.Contains(Cardinal.N) || connections.Keys.Contains(Cardinal.S);
-    public bool IsHorizontal => connections.Keys.Contains(Cardinal.W) || connections.Keys.Contains(Cardinal.E);
     public int X => coords.Item1;
     public int Y => coords.Item2;
 
