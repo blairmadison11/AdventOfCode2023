@@ -31,27 +31,18 @@ for (var i = 0; i < lines.Count; ++i)
     }
 }
 
-var sc = start.ConnectedCardinals;
-var paths = new List<List<Pipe>>();
-paths.Add(new List<Pipe>() { start, start.GetConnection(sc[0]) });
-paths.Add(new List<Pipe>() { start, start.GetConnection(sc[1]) });
-while (paths[0][^1] != paths[1][^1] && paths[0][^1] != paths[1][^2])
+var path = new List<Pipe>() { start, start.GetConnection(start.ConnectedCardinals[0])};
+while (path[^1].GetNext() != path[0])
 {
-    foreach (var path in paths)
-    {
-        path.Add(path[^1].GetNext());
-    }
+    path.Add(path[^1].GetNext());
 }
-Console.WriteLine(paths[0].Count - 1);
+Console.WriteLine((int)(path.Count / 2));
 
 // START DEBUG OUTPUT
 var pathGrid = new Pipe[pipes.GetLength(0) + 1, pipes.GetLength(1) + 1];
-foreach (var path in paths)
+foreach (var pipe in path)
 {
-    foreach (var pipe in path)
-    {
-        pathGrid[pipe.X, pipe.Y] = pipe;
-    }
+    pathGrid[pipe.X, pipe.Y] = pipe;
 }
 
 using (StreamWriter sw = new StreamWriter("D:\\output.txt"))
@@ -123,7 +114,7 @@ class Pipe
 
     public Cardinal[] AvailableCardinals => cardinals;
     public Cardinal[] ConnectedCardinals => connections.Keys.ToArray();
-    
+
     public bool HasCardinal(Cardinal c) => cardinals.Contains(c);
     public bool IsVertical => connections.Keys.Contains(Cardinal.N) || connections.Keys.Contains(Cardinal.S);
     public bool IsHorizontal => connections.Keys.Contains(Cardinal.W) || connections.Keys.Contains(Cardinal.E);
