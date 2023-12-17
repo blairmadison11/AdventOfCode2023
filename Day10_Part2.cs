@@ -315,7 +315,6 @@ class Pipe
                 }
                 break;
         }
-        var t = l.Where(c => grid[c.Item1, c.Item2] == null).ToHashSet();
-        return t;
+        return l.Where(c => grid[c.Item1, c.Item2] == null).ToHashSet();
     }
 }
