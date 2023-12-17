@@ -227,9 +227,8 @@ class Pipe
         Pipe p = connections[c];
         p.Prev = opposite[c];
 
-        // the code below is voodoo and even though I wrote it I barely understand why it works
-        int diff = (int)Math.Abs(this.SideAngle - p.SideAngle);
-        if (diff == 90 || diff == 270)
+        // the code below is  voodoo and even though I wrote it I barely understand why it works
+        if (Math.Abs(this.SideAngle - p.SideAngle) == 90 || Math.Abs(this.SideAngle - p.SideAngle) == 270)
         {
             if (this.SideAngle == sideLookup[this.Symbol] && p.SideAngle == sideLookup[p.Symbol])
             {
