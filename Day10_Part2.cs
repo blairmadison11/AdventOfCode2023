@@ -230,9 +230,13 @@ class Pipe
         Pipe p = connections[c];
         p.Prev = opposite[c];
 
+        // align the side of the next pipe to the side of this pipe
         // the code below is voodoo and even though I wrote it I barely understand why it works
-        if (((Math.Abs(this.SideAngle - p.SideAngle) == 90 || Math.Abs(this.SideAngle - p.SideAngle) == 270) && this.SideAngle != sideLookup[this.Symbol]) ||
-            (Math.Abs((this.SideAngle - (p.SideAngle + 360)) % 360) > 90 && Math.Abs(((this.SideAngle + 360) - p.SideAngle) % 360) > 90))
+        if (((Math.Abs(this.SideAngle - p.SideAngle) == 90 ||
+            Math.Abs(this.SideAngle - p.SideAngle) == 270) &&
+            this.SideAngle != sideLookup[this.Symbol]) ||
+            (Math.Abs((this.SideAngle - (p.SideAngle + 360)) % 360) > 90 &&
+            Math.Abs(((this.SideAngle + 360) - p.SideAngle) % 360) > 90))
         {
             p.SideAngle = (p.SideAngle + 180) % 360;
         }
