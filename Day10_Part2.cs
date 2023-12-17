@@ -64,34 +64,34 @@ foreach (var pipe in path)
 // find all empty spaces connected to each side
 // and find which side is inside and which is outside
 var surround = new List<(int, int)>() { (-1, -1), (-1, 0), (-1, 1), (0, -1), (0, 1), (1, -1), (1, 0), (1, 1) };
-var aCoords = new HashSet<(int, int)>();
-var bCoords = new HashSet<(int, int)>();
+var groupA = new HashSet<(int, int)>();
+var groupB = new HashSet<(int, int)>();
 var insideNotFound = true;
-HashSet<(int, int)> inside = aCoords;
-foreach (var group in new []{ sideA, sideB })
+HashSet<(int, int)> inside = groupA;
+foreach (var side in new []{ sideA, sideB })
 {
-    foreach (var c in group)
+    foreach (var c1 in side)
     {
-        var coords = group == sideA ? aCoords : bCoords;
+        var group = side == sideA ? groupA : groupB;
         var s = new Stack<(int, int)>();
-        s.Push(c);
+        s.Push(c1);
         while (s.Count > 0)
         {
-            var cc = s.Pop();
-            if (!coords.Contains(cc))
+            var c2 = s.Pop();
+            if (!group.Contains(c2))
             {
-                coords.Add(cc);
-                foreach (var cc2 in surround.Select(x => (x.Item1 + cc.Item1, x.Item2 + cc.Item2))
+                group.Add(c2);
+                foreach (var c3 in surround.Select(x => (x.Item1 + c2.Item1, x.Item2 + c2.Item2))
                         .Where(y => y.Item1 >= 0 && y.Item1 < pathGrid.GetLength(0) && y.Item2 >= 0 && y.Item2 < pathGrid.GetLength(1)
                         && pathGrid[y.Item1, y.Item2] == null))
                 {
-                    if (insideNotFound && (cc2.Item1 == 0 || cc2.Item1 == pathGrid.GetLength(0) - 1 ||
-                        cc2.Item2 == 0 || cc2.Item2 == pathGrid.GetLength(1) - 1))
+                    if (insideNotFound && (c3.Item1 == 0 || c3.Item1 == pathGrid.GetLength(0) - 1 ||
+                        c3.Item2 == 0 || c3.Item2 == pathGrid.GetLength(1) - 1))
                     {
-                        if (group == sideA) inside = bCoords;
+                        if (side == sideA) inside = groupB;
                         insideNotFound = false;
                     }
-                    s.Push(cc2);
+                    s.Push(c3);
                 }
             }
         }
