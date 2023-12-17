@@ -129,7 +129,6 @@ using (StreamWriter sw = new StreamWriter("D:\\output.txt"))
             }
             else if (pathGrid[i, j] != null)
             {
-                
                 sw.Write(pathGrid[i, j].Symbol);
             }
             else
