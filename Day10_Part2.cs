@@ -1,5 +1,5 @@
 // took me a week to come up with this janky solution, but it works and it's 100% my own (no help or hints received)
-var lines = new List<string>(File.ReadAllLines(@"D:\input2.txt").Select(line => string.Format(".{0}", line)));
+var lines = new List<string>(File.ReadAllLines(@"D:\input.txt").Select(line => string.Format(".{0}", line)));
 lines.Insert(0, new string('.', lines[0].Length));
 
 var pipes = new Pipe[lines.Count, lines[0].Length];
@@ -52,8 +52,11 @@ var sideA = new HashSet<(int, int)>();
 var sideB = new HashSet<(int, int)>();
 foreach (var pipe in path)
 {
-    sideA.UnionWith(pipe.GetAdjacentCoords(pathGrid, false));
-    sideB.UnionWith(pipe.GetAdjacentCoords(pathGrid, true));
+    if (pipe != start)
+    {
+        sideA.UnionWith(pipe.GetAdjacentCoords(pathGrid, false));
+        sideB.UnionWith(pipe.GetAdjacentCoords(pathGrid, true));
+    }
 }
 
 // find out which side is inside and which side is outside
