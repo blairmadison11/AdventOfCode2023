@@ -40,11 +40,11 @@ while ((p = path[^1].GetNext()) != path[0])
     path.Add(p);
 }
 
+// plot the path on a grid
 var pathGrid = new Pipe[pipes.GetLength(0) + 1, pipes.GetLength(1) + 1];
 foreach (var pipe in path)
 {
     pathGrid[pipe.X, pipe.Y] = pipe;
-    
 }
 
 // find all adjacent empty spaces on each side of the path
@@ -86,6 +86,7 @@ foreach (var c in sideA)
     if (sideAisOut) break;
 }
 
+// search for all empty spaces adjacent to inside edge
 var inside = sideAisOut ? sideB : sideA;
 var insCoords = new HashSet<(int, int)>();
 foreach (var c in inside)
