@@ -226,6 +226,8 @@ class Pipe
     {
         Pipe p = connections[c];
         p.Prev = opposite[c];
+
+        // the code below is voodoo and even though I wrote it I barely understand why it works
         int diff = (int)Math.Abs(this.SideAngle - p.SideAngle);
         if (diff == 90 || diff == 270)
         {
