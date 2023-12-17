@@ -62,7 +62,7 @@ foreach (var pipe in path)
 }
 
 // find all empty spaces connected to each side
-// and find which side is inside and which is outside
+// and note which side is inside and which is outside
 var surround = new List<(int, int)>() { (-1, -1), (-1, 0), (-1, 1), (0, -1), (0, 1), (1, -1), (1, 0), (1, 1) };
 var groupA = new HashSet<(int, int)>();
 var groupB = new HashSet<(int, int)>();
