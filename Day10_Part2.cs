@@ -1,4 +1,6 @@
 // took me a week to come up with this janky solution, but it works and it's 100% my own (no help or hints received)
+using System.Collections.Generic;
+
 var lines = new List<string>(File.ReadAllLines(@"D:\input.txt").Select(line => string.Format(".{0}", line)));
 lines.Insert(0, new string('.', lines[0].Length));
 
@@ -59,62 +61,43 @@ foreach (var pipe in path)
     }
 }
 
-// find out which side is inside and which side is outside
+// find all empty spaces connected to each side
+// and find which side is inside and which is outside
 var surround = new List<(int, int)>() { (-1, -1), (-1, 0), (-1, 1), (0, -1), (0, 1), (1, -1), (1, 0), (1, 1) };
-var sideAisOut = false;
-foreach (var c in sideA)
+var aCoords = new HashSet<(int, int)>();
+var bCoords = new HashSet<(int, int)>();
+var insideNotFound = true;
+HashSet<(int, int)> inside = aCoords;
+foreach (var group in new []{ sideA, sideB })
 {
-    var visited = new bool[pathGrid.GetLength(0), pathGrid.GetLength(1)];
-    var s = new Stack<(int, int)>();
-    s.Push(c);
-    while (s.Count > 0 && !sideAisOut)
+    foreach (var c in group)
     {
-        var cc = s.Pop();
-        if (!visited[cc.Item1, cc.Item2])
-        {
-            visited[cc.Item1, cc.Item2] = true;
-            foreach (var cc2 in surround.Select(x => (x.Item1 + cc.Item1, x.Item2 + cc.Item2))
-                    .Where(y => y.Item1 >= 0 && y.Item1 < pathGrid.GetLength(0) && y.Item2 >= 0 && y.Item2 < pathGrid.GetLength(1)
-                    && pathGrid[y.Item1, y.Item2] == null))
-            {
-                if (cc2.Item1 == 0 || cc2.Item1 == pathGrid.GetLength(0) - 1 || cc2.Item2 == 0 || cc2.Item2 == pathGrid.GetLength(1) - 1)
-                {
-                    sideAisOut = true;
-                    break;
-                }
-                s.Push(cc2);
-            }
-        }
-    }
-    if (sideAisOut) break;
-}
-
-// search for all empty spaces adjacent to inside edge
-var inside = sideAisOut ? sideB : sideA;
-var insCoords = new HashSet<(int, int)>();
-foreach (var c in inside)
-{
-    var s = new Stack<(int, int)>();
-    if (!insCoords.Contains(c))
-    {
+        var coords = group == sideA ? aCoords : bCoords;
+        var s = new Stack<(int, int)>();
         s.Push(c);
         while (s.Count > 0)
         {
             var cc = s.Pop();
-            if (!insCoords.Contains(cc))
+            if (!coords.Contains(cc))
             {
-                insCoords.Add(cc);
+                coords.Add(cc);
                 foreach (var cc2 in surround.Select(x => (x.Item1 + cc.Item1, x.Item2 + cc.Item2))
-                    .Where(y => y.Item1 >= 0 && y.Item1 < pathGrid.GetLength(0) && y.Item2 >= 0 && y.Item2 < pathGrid.GetLength(1)
-                    && pathGrid[y.Item1, y.Item2] == null))
+                        .Where(y => y.Item1 >= 0 && y.Item1 < pathGrid.GetLength(0) && y.Item2 >= 0 && y.Item2 < pathGrid.GetLength(1)
+                        && pathGrid[y.Item1, y.Item2] == null))
                 {
+                    if (insideNotFound && (cc2.Item1 == 0 || cc2.Item1 == pathGrid.GetLength(0) - 1 ||
+                        cc2.Item2 == 0 || cc2.Item2 == pathGrid.GetLength(1) - 1))
+                    {
+                        if (group == sideA) inside = bCoords;
+                        insideNotFound = false;
+                    }
                     s.Push(cc2);
                 }
             }
         }
     }
 }
-Console.WriteLine(insCoords.Count());
+Console.WriteLine(inside.Count());
 
 // START DEBUG OUTPUT
 using (StreamWriter sw = new StreamWriter("D:\\output.txt"))
