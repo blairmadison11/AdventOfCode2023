@@ -1,4 +1,4 @@
-// took me a week to come up with this janky solution, but it works and it's 100% my own
+// took me a week to come up with this janky solution, but it works and it's 100% my own (no help or hints recieved)
 var lines = new List<string>(File.ReadAllLines(@"D:\input.txt").Select(line => string.Format(".{0}", line)));
 lines.Insert(0, new string('.', lines[0].Length));
 
