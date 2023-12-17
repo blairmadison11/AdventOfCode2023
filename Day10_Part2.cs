@@ -1,5 +1,5 @@
 // took me a week to come up with this janky solution, but it works and it's 100% my own (no help or hints received)
-var lines = new List<string>(File.ReadAllLines(@"D:\input.txt").Select(line => string.Format(".{0}", line)));
+var lines = new List<string>(File.ReadAllLines(@"D:\input2.txt").Select(line => string.Format(".{0}", line)));
 lines.Insert(0, new string('.', lines[0].Length));
 
 var pipes = new Pipe[lines.Count, lines[0].Length];
@@ -228,18 +228,8 @@ class Pipe
         p.Prev = opposite[c];
 
         // the code below is voodoo and even though I wrote it I barely understand why it works
-        if (Math.Abs(this.SideAngle - p.SideAngle) == 90 || Math.Abs(this.SideAngle - p.SideAngle) == 270)
-        {
-            if (this.SideAngle == sideLookup[this.Symbol] && p.SideAngle == sideLookup[p.Symbol])
-            {
-                p.SideAngle = (this.SideAngle + 270) % 360;
-            }
-            else
-            {
-                p.SideAngle = (this.SideAngle + 90) % 360;
-            }
-        }
-        else if (Math.Abs((this.SideAngle - (p.SideAngle + 360)) % 360) > 90 && Math.Abs(((this.SideAngle + 360) - p.SideAngle) % 360) > 90)
+        if (((Math.Abs(this.SideAngle - p.SideAngle) == 90 || Math.Abs(this.SideAngle - p.SideAngle) == 270) && this.SideAngle != sideLookup[this.Symbol]) ||
+            (Math.Abs((this.SideAngle - (p.SideAngle + 360)) % 360) > 90 && Math.Abs(((this.SideAngle + 360) - p.SideAngle) % 360) > 90))
         {
             p.SideAngle = (p.SideAngle + 180) % 360;
         }
