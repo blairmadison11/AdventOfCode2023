@@ -1,9 +1,9 @@
-var grid = File.ReadAllLines(@"D:\input.txt").Select(l => l.ToList()).ToList();
-var blankRows = Enumerable.Range(0, grid.Count).ToHashSet();
-var blankCols = Enumerable.Range(0, grid[0].Count).ToHashSet();
-for (int i = 0; i < grid.Count; ++i)
+var grid = File.ReadAllLines(@"D:\input.txt").Select(l => l.ToArray()).ToArray();
+var blankRows = Enumerable.Range(0, grid.Length).ToHashSet();
+var blankCols = Enumerable.Range(0, grid[0].Length).ToHashSet();
+for (int i = 0; i < grid.Length; ++i)
 {
-    for (int j = 0; j < grid[i].Count; ++j)
+    for (int j = 0; j < grid[i].Length; ++j)
     {
         if (grid[i][j] == '#')
         {
@@ -13,8 +13,8 @@ for (int i = 0; i < grid.Count; ++i)
     }
 }
 
-var colWidths = Enumerable.Repeat((ulong)1, grid[0].Count).ToArray();
-var rowWidths = Enumerable.Repeat((ulong)1, grid.Count).ToArray();
+var colWidths = Enumerable.Repeat((ulong)1, grid[0].Length).ToArray();
+var rowWidths = Enumerable.Repeat((ulong)1, grid.Length).ToArray();
 foreach (var col in blankCols)
 {
     colWidths[col] = 1000000;
@@ -26,9 +26,9 @@ foreach (var row in blankRows)
 }
 
 var vertices = new List<Vertex>();
-for (int i = 0; i < grid.Count; ++i)
+for (int i = 0; i < grid.Length; ++i)
 {
-    for (int j = 0; j < grid[i].Count; ++j)
+    for (int j = 0; j < grid[i].Length; ++j)
     {
         if (grid[i][j] == '#')
         {
