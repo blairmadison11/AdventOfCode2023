@@ -1,7 +1,7 @@
 // This BFS solution works with the sample data but is too slow for the full input
 using System.Text;
 
-Path.Grid = File.ReadLines(@"D:\input2.txt").Select(l => l.Select(c => c - '0').ToArray()).ToArray();
+Path.Grid = File.ReadLines(@"D:\input.txt").Select(l => l.Select(c => c - '0').ToArray()).ToArray();
 Path.End = (Path.Grid.Length - 1, Path.Grid[0].Length - 1);
 
 var adjs = new List<(int, int, Cardinal)>() { { (-1, 0, Cardinal.N) }, { (0, 1, Cardinal.E) }, { (1, 0, Cardinal.S) }, { (0, -1, Cardinal.W) } };
