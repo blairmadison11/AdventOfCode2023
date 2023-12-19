@@ -5,8 +5,8 @@ var lines = File.ReadAllLines("input.txt");
 var directions = lines[0].ToArray();
 for (int i = 2; i < lines.Length; ++i)
 {
-    var matches = Regex.Matches(lines[i], @"[A-Z]+");
-    map.Add(matches[0].Value, (matches[1].Value, matches[2].Value));
+    var m = Regex.Matches(lines[i], @"[A-Z]+");
+    map.Add(m[0].Value, (m[1].Value, m[2].Value));
 }
 var curLocs = map.Keys.Where(k => k.EndsWith("A")).ToHashSet();
 var stepCounts = new List<ulong>();
