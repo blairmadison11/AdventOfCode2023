@@ -1,6 +1,6 @@
 using System.Text.RegularExpressions;
 
-var hands = File.ReadAllLines("D:\\input.txt").Select(l => {
+var hands = File.ReadAllLines("input.txt").Select(l => {
         var m = Regex.Match(l, @"([2-9TJQKA])+ (\d+)");
         return new Hand(m.Groups[1].Captures.Select(c => c.Value).ToArray(), int.Parse(m.Groups[2].Value));
     }).ToList();
