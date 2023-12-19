@@ -23,13 +23,13 @@ while ((line = lines[li++]) != "")
         dstList.Add(m.Groups[5].Captures[i].Value);
         if (op == "<")
         {
-            wfList.Add((Dictionary<string, (ulong, ulong)> p) => p[cat].Item1 < num ? (p[cat].Item2 < num ? p : p.ToDictionary(e => e.Key, e => e.Key == cat ? (p[cat].Item1, num - 1) : e.Value)) : p.ToDictionary(e => e.Key, e => e.Key == cat ? (0, 0) : e.Value));
-            wfcList.Add((Dictionary<string, (ulong, ulong)> p) => p[cat].Item2 >= num ? (p[cat].Item1 >= num ? p : p.ToDictionary(e => e.Key, e => e.Key == cat ? (num, p[cat].Item2) : e.Value)) : p.ToDictionary(e => e.Key, e => e.Key == cat ? (0, 0) : e.Value));
+            wfList.Add((Dictionary<string, (ulong, ulong)> p) => p[cat].Item1 < num ? (p[cat].Item2 < num ? p.ToDictionary(e => e.Key, e => e.Value) : p.ToDictionary(e => e.Key, e => e.Key == cat ? (p[cat].Item1, num - 1) : e.Value)) : p.ToDictionary(e => e.Key, e => e.Key == cat ? (0, 0) : e.Value));
+            wfcList.Add((Dictionary<string, (ulong, ulong)> p) => p[cat].Item2 >= num ? (p[cat].Item1 >= num ? p.ToDictionary(e => e.Key, e => e.Value) : p.ToDictionary(e => e.Key, e => e.Key == cat ? (num, p[cat].Item2) : e.Value)) : p.ToDictionary(e => e.Key, e => e.Key == cat ? (0, 0) : e.Value));
         }
         else
         {
-            wfList.Add((Dictionary<string, (ulong, ulong)> p) => p[cat].Item2 > num ? (p[cat].Item1 > num ? p : p.ToDictionary(e => e.Key, e => e.Key == cat ? (num + 1, p[cat].Item2) : e.Value)) : p.ToDictionary(e => e.Key, e => e.Key == cat ? (0, 0) : e.Value));
-            wfcList.Add((Dictionary<string, (ulong, ulong)> p) => p[cat].Item1 <= num ? (p[cat].Item2 <= num ? p : p.ToDictionary(e => e.Key, e => e.Key == cat ? (p[cat].Item1, num) : e.Value)) : p.ToDictionary(e => e.Key, e => e.Key == cat ? (0, 0) : e.Value));
+            wfList.Add((Dictionary<string, (ulong, ulong)> p) => p[cat].Item2 > num ? (p[cat].Item1 > num ? p.ToDictionary(e => e.Key, e => e.Value) : p.ToDictionary(e => e.Key, e => e.Key == cat ? (num + 1, p[cat].Item2) : e.Value)) : p.ToDictionary(e => e.Key, e => e.Key == cat ? (0, 0) : e.Value));
+            wfcList.Add((Dictionary<string, (ulong, ulong)> p) => p[cat].Item1 <= num ? (p[cat].Item2 <= num ? p.ToDictionary(e => e.Key, e => e.Value) : p.ToDictionary(e => e.Key, e => e.Key == cat ? (p[cat].Item1, num) : e.Value)) : p.ToDictionary(e => e.Key, e => e.Key == cat ? (0, 0) : e.Value));
         }
     }
     workflows.Add(src, wfList);
