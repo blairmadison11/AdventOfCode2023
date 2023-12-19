@@ -38,19 +38,9 @@ while ((line = lines[li++]) != "")
     fallbacks.Add(src, fbk);
 }
 
-var cats = new List<string>() { "x", "m", "a", "s" };
-var q = new Queue<(string, Dictionary<string, (int, int)>)>();
 var accs = new List<Dictionary<string, (int, int)>>();
-for (int i = 0; i < workflows["in"].Count; ++i)
-{
-    var d = new Dictionary<string, (int, int)>();
-    foreach (var c in cats)
-    {
-        d.Add(c, (1, 4000));
-    }
-    q.Enqueue(("in", d));
-}
-
+var q = new Queue<(string, Dictionary<string, (int, int)>)>();
+q.Enqueue(("in", new Dictionary<string, (int, int)>() { { "x", (1, 4000) }, { "m", (1, 4000) }, { "a", (1, 4000) }, { "s", (1, 4000) } }));
 while (q.Count > 0)
 {
     var r = q.Dequeue();
