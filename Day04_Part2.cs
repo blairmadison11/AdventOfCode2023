@@ -1,6 +1,6 @@
 using System.Text.RegularExpressions;
 
-var lines = File.ReadAllLines("D:\\input.txt");
+var lines = File.ReadAllLines("input.txt");
 var cards = Enumerable.Repeat(1, lines.Length).ToArray();
 for (var i = 0; i < lines.Length; i++)
 {
