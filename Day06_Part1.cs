@@ -1,6 +1,6 @@
 using System.Text.RegularExpressions;
 
-var lines = File.ReadAllLines("D:\\input.txt");
+var lines = File.ReadAllLines("input.txt");
 var times = Regex.Match(lines[0], @"Time:\s+(?:(\d+)\s*)+").Groups[1].Captures.Select(c => int.Parse(c.Value));
 var dists = Regex.Match(lines[1], @"Distance:\s+(?:(\d+)\s*)+").Groups[1].Captures.Select(c => int.Parse(c.Value));
 var wins = new List<int>();
