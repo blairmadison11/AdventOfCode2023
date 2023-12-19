@@ -1,7 +1,7 @@
 using System.Text.RegularExpressions;
 
 var sum = 0;
-var lines = new List<string>(File.ReadAllLines("D:\\input3.txt").Select(line => string.Format(".{0}.", line)));
+var lines = new List<string>(File.ReadAllLines("input.txt").Select(line => string.Format(".{0}.", line)));
 lines.Insert(0, new string('.', lines[0].Length));
 lines.Add(new string('.', lines[0].Length));
 
