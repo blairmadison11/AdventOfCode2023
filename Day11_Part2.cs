@@ -1,4 +1,4 @@
-var grid = File.ReadAllLines(@"D:\input.txt").Select(l => l.ToArray()).ToArray();
+var grid = File.ReadAllLines("input.txt").Select(l => l.ToArray()).ToArray();
 var blankRows = Enumerable.Range(0, grid.Length).ToHashSet();
 var blankCols = Enumerable.Range(0, grid[0].Length).ToHashSet();
 for (int i = 0; i < grid.Length; ++i)
