@@ -15,12 +15,12 @@ while ((line = lines[li++]) != "")
     var wfList = new List<Func<Dictionary<string, (ulong, ulong)>, Dictionary<string, (ulong, ulong)>>>();
     var wfcList = new List<Func<Dictionary<string, (ulong, ulong)>, Dictionary<string, (ulong, ulong)>>>();
     var dstList = new List<string>();
-    for (int j = 0; j < m.Groups[2].Captures.Count; ++j)
+    for (int i = 0; i < m.Groups[2].Captures.Count; ++i)
     {
-        var cat = m.Groups[2].Captures[j].Value;
-        var op = m.Groups[3].Captures[j].Value;
-        var num = ulong.Parse(m.Groups[4].Captures[j].Value);
-        dstList.Add(m.Groups[5].Captures[j].Value);
+        var cat = m.Groups[2].Captures[i].Value;
+        var op = m.Groups[3].Captures[i].Value;
+        var num = ulong.Parse(m.Groups[4].Captures[i].Value);
+        dstList.Add(m.Groups[5].Captures[i].Value);
         if (op == "<")
         {
             wfList.Add((Dictionary<string, (ulong, ulong)> p) => p[cat].Item1 < num ? (p[cat].Item2 < num ? p : p.ToDictionary(e => e.Key, e => e.Key == cat ? (p[cat].Item1, num - 1) : e.Value)) : p.ToDictionary(e => e.Key, e => e.Key == cat ? (0, 0) : e.Value));
