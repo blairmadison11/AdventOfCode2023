@@ -1,7 +1,7 @@
 using System.Text.RegularExpressions;
 
 var sum = 0;
-foreach (var line in File.ReadAllLines("D:\\input.txt"))
+foreach (var line in File.ReadAllLines("input.txt"))
 {
     var cubeCounts = new Dictionary<string, int>();
     var match = Regex.Match(line, @"Game (\d*): (?:((\d*) (red|green|blue),?\s?)+;?\s?)+");
