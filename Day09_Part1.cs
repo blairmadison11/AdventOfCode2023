@@ -1,6 +1,6 @@
 using System.Text.RegularExpressions;
 
-var hists = File.ReadAllLines("D:\\input.txt").Select(l => Regex.Match(l, @"(?:(-?\d+)\s*)+").Groups[1].Captures.Select(c => long.Parse(c.Value)).ToList()).ToList();
+var hists = File.ReadAllLines("input.txt").Select(l => Regex.Match(l, @"(?:(-?\d+)\s*)+").Groups[1].Captures.Select(c => long.Parse(c.Value)).ToList()).ToList();
 var nextVals = new List<long>();
 foreach (var hist in hists)
 {
