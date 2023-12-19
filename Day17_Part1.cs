@@ -1,7 +1,6 @@
-// Work in progress
 using System.Text;
 
-Path.Grid = File.ReadLines(@"D:\input.txt").Select(l => l.Select(c => c - '0').ToArray()).ToArray();
+Path.Grid = File.ReadLines("input.txt").Select(l => l.Select(c => c - '0').ToArray()).ToArray();
 Path.End = (Path.Grid.Length - 1, Path.Grid[0].Length - 1);
 
 var adjs = new List<(int, int, Cardinal)>() { { (-1, 0, Cardinal.N) }, { (0, 1, Cardinal.E) }, { (1, 0, Cardinal.S) }, { (0, -1, Cardinal.W) } };
@@ -20,7 +19,6 @@ while (q.Count > 0 && !done)
     var n = c.LastNode;
     var nextPaths = adjs.Where(x => !c.IsOppositeDir(x.Item3) && !c.IsMaxRepetition(x.Item3))
         .Select(x => (n.Item1 + x.Item1, n.Item2 + x.Item2, x.Item3))
-        //.Where(x => x.Item1 >= 0 && x.Item1 <= Path.End.Item1 && x.Item2 >= 0 && x.Item2 <= Path.End.Item2 && !c.Contains((x.Item1, x.Item2)))
         .Where(x => x.Item1 >= 0 && x.Item1 <= Path.End.Item1 && x.Item2 >= 0 && x.Item2 <= Path.End.Item2)
         .Select(x => new Path(c, (x.Item1, x.Item2), x.Item3))
         .Where(x => !lhl.ContainsKey((x.LastNode.Item1, x.LastNode.Item2, x.Repetitions, x.Direction))
@@ -28,33 +26,24 @@ while (q.Count > 0 && !done)
     foreach (var p in nextPaths)
     {
         lhl[(p.LastNode.Item1, p.LastNode.Item2, p.Repetitions, p.Direction)] = p.HeatLoss;
-        
+
         if (p.IsComplete)
         {
             lhle = p.HeatLoss;
             bp = p;
             done = true;
-            /*
-            if (p.HeatLoss < lhle)
-            {
-                lhle = p.HeatLoss;
-                bp = p;
-            }
-            */
+            break;
         }
         else
         {
-            //Console.WriteLine(p.ToString());
-            //Console.WriteLine("Cumulative heatloss: {0}", p.HeatLoss);
-            //Console.WriteLine("Estimated total heatloss: {0}", p.Priority);
-            //Console.ReadLine();
             q.Enqueue(p, p.Priority);
         }
     }
 }
-Console.WriteLine("Steps: {0}", steps);
-Console.WriteLine("Answer: {0}", lhle);
-File.WriteAllText(@"D:\output.txt", bp.ToString());
+Console.WriteLine(lhle);
+
+//Debug output
+File.WriteAllText(@"output.txt", bp.ToString());
 
 enum Cardinal { Unknown, N, E, S, W }
 class Path
