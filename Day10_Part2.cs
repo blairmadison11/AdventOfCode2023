@@ -1,7 +1,7 @@
 // took me a week to come up with this somewhat questionable solution, but it works and it's 100% my own (no help or hints received)
 using System.Collections.Generic;
 
-var lines = new List<string>(File.ReadAllLines(@"D:\input.txt").Select(line => string.Format(".{0}", line)));
+var lines = new List<string>(File.ReadAllLines("input.txt").Select(line => string.Format(".{0}", line)));
 lines.Insert(0, new string('.', lines[0].Length));
 
 var pipes = new Pipe[lines.Count, lines[0].Length];
