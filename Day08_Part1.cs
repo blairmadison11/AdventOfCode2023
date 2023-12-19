@@ -1,7 +1,7 @@
 using System.Text.RegularExpressions;
 
 var map = new Dictionary<string, Tuple<string,string>>();
-var lines = File.ReadAllLines("D:\\input.txt");
+var lines = File.ReadAllLines("input.txt");
 var directions = lines[0].ToArray();
 for (int i = 2; i < lines.Length; ++i)
 {
