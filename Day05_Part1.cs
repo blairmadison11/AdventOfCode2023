@@ -1,7 +1,7 @@
 using System.Text.RegularExpressions;
 
 var maps = new List<Func<long,long>>();
-var lines = File.ReadAllLines("D:\\input.txt");
+var lines = File.ReadAllLines("input.txt");
 var seeds = Array.ConvertAll(Regex.Match(lines[0], @"seeds: (?:(\d+)\s*)+").Groups[1].Captures.ToArray(), c => long.Parse(c.Value));
 for (var i = 2; i < lines.Length; ++i)
 {
