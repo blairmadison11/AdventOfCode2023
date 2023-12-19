@@ -2,7 +2,7 @@ using System.Text.RegularExpressions;
 
 var sum = 0;
 var lines = new List<string>();
-lines.AddRange(File.ReadAllLines("D:\\input.txt").Select(line => string.Format(".{0}.", line)));
+lines.AddRange(File.ReadAllLines("input.txt").Select(line => string.Format(".{0}.", line)));
 lines.Insert(0, new string('.', lines[0].Length));
 lines.Add(new string('.', lines[0].Length));
 for (var i = 1; i < lines.Count - 1; ++i)
