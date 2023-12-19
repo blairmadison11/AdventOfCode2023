@@ -1,12 +1,12 @@
 using System.Text.RegularExpressions;
 
-var map = new Dictionary<string, Tuple<string,string>>();
+var map = new Dictionary<string, (string, string)>();
 var lines = File.ReadAllLines("input.txt");
 var directions = lines[0].ToArray();
 for (int i = 2; i < lines.Length; ++i)
 {
-    var matches = Regex.Matches(lines[i], @"[A-Z]+");
-    map.Add(matches[0].Value, new Tuple<string, string>(matches[1].Value, matches[2].Value));
+    var m = Regex.Matches(lines[i], @"[A-Z]+");
+    map.Add(m[0].Value, (m[1].Value, m[2].Value));
 }
 
 var curLoc = "AAA";
