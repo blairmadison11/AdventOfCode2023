@@ -1,6 +1,6 @@
 using System.Text.RegularExpressions;
 
-var lines = File.ReadAllLines(@"D:\input.txt");
+var lines = File.ReadAllLines("input.txt");
 var workflows = new Dictionary<string, List<Func<Dictionary<string, int>, string>>>();
 var fallbacks = new Dictionary<string, string>();
 var parts = new List<Dictionary<string, int>>();
