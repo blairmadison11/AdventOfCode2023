@@ -1,4 +1,4 @@
-// This BFS solution works with the sample data but is too slow for the full input
+// Work in progress
 using System.Text;
 
 Path.Grid = File.ReadLines(@"D:\input.txt").Select(l => l.Select(c => c - '0').ToArray()).ToArray();
