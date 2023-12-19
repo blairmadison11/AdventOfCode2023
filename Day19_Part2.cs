@@ -1,6 +1,6 @@
 using System.Text.RegularExpressions;
 
-var lines = File.ReadAllLines(@"D:\input.txt");
+var lines = File.ReadAllLines("input.txt");
 var workflows = new Dictionary<string, List<Func<Dictionary<string, (int, int)>, Dictionary<string, (int, int)>>>>();
 var wfcomplements = new Dictionary<string, List<Func<Dictionary<string, (int, int)>, Dictionary<string, (int, int)>>>>();
 var destinations = new Dictionary<string, List<string>>();
