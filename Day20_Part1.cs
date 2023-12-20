@@ -102,11 +102,6 @@ public abstract class CommModule
         placeholders.Clear();
     }
 
-    public void NotifyNewModule(CommModule mod)
-    {
-        
-    }
-
     public void AddDestination(CommModule module)
     {
         dsts.Add(module);
