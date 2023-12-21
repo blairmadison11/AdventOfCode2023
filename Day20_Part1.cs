@@ -44,7 +44,7 @@ public abstract class CommModule
 {
     private static Queue<CommModule> propagationQueue = new Queue<CommModule>();
     protected static CommModule broadcaster = null;
-    public static Dictionary<Pulse, ulong> pulseCounts = new Dictionary<Pulse, ulong>() { { Pulse.Low, 0 }, { Pulse.High, 0 } };
+    protected static Dictionary<Pulse, ulong> pulseCounts = new Dictionary<Pulse, ulong>() { { Pulse.Low, 0 }, { Pulse.High, 0 } };
     public static bool IsPropagating => propagationQueue.Count > 0;
     public static CommModule NextModule => propagationQueue.Dequeue();
     public static ulong LowPulseCount => pulseCounts[Pulse.Low];
