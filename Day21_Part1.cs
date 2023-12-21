@@ -66,6 +66,7 @@ while (q.Count > 0)
 
 Console.WriteLine(endPlots.Count);
 
+// *** DEBUG OUTPUT ***
 using (var sw = new StreamWriter("output.txt"))
 {
     for (int i = 0; i < grid.Length; ++i)
