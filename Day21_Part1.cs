@@ -1,17 +1,17 @@
 var grid = File.ReadAllLines("input.txt").Select(l => l.ToArray()).ToArray();
 var plots = new Plot[grid.Length, grid[0].Length];
-Plot start = new Plot(0, 0);
+Plot start = new Plot();
 for (int i = 0; i < grid.Length; ++i)
 {
     for (int j = 0; j < grid[i].Length; ++j)
     {
         if (grid[i][j] == '.')
         {
-            plots[i, j] = new Plot(i, j);
+            plots[i, j] = new Plot();
         }
         else if (grid[i][j] == 'S')
         {
-            var p = new Plot(i, j);
+            var p = new Plot();
             plots[i, j] = p;
             start = p;
         }
@@ -116,19 +116,8 @@ class Path
 
 class Plot
 {
-    private int row, col;
     private List<Plot> connectedPlots = new List<Plot>();
-
-    public int Row => row;
-    public int Col => col;
-    public int NextCount => connectedPlots.Count;
     public List<Plot> ConnectedPlots => connectedPlots;
-
-    public Plot(int row, int col)
-    {
-        this.row = row;
-        this.col = col;
-    }
 
     public void AddConnectedPlot(Plot p)
     {
