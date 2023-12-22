@@ -12,18 +12,14 @@ class Puzzle
     private string parts;
     private string valid;
 
-    private string Simplify(string input) => input.Trim('.').Select(x => x.ToString()).Aggregate((a, c) => a[^1] == '.' && c == "." ? a : a + c);
-
     public Puzzle(string input, int[] runs)
     {
         parts = Simplify(input);
         valid = string.Join('.', runs.Select(r => new string('#', r)));
     }
 
-    public int Solve()
-    {
-        return SolveRecursive(parts);
-    }
+    private string Simplify(string input) => input.Trim('.').Select(x => x.ToString()).Aggregate((a, c) => a[^1] == '.' && c == "." ? a : a + c);
+    public int Solve() => SolveRecursive(parts);
 
     private int SolveRecursive(string input)
     {
