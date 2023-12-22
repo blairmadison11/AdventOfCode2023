@@ -8,18 +8,16 @@ Console.WriteLine(File.ReadAllLines("input.txt").Select(l => {
 class Puzzle
 {
     private Dictionary<string, int> mem = new Dictionary<string, int>();
-
-    private string parts;
-    private string valid;
+    private string given, valid;
 
     public Puzzle(string input, int[] runs)
     {
-        parts = Simplify(input);
+        given = Simplify(input);
         valid = string.Join('.', runs.Select(r => new string('#', r)));
     }
 
     private string Simplify(string input) => input.Trim('.').Select(x => x.ToString()).Aggregate((a, c) => a[^1] == '.' && c == "." ? a : a + c);
-    public int Solve() => SolveRecursive(parts);
+    public int Solve() => SolveRecursive(given);
 
     private int SolveRecursive(string input)
     {
