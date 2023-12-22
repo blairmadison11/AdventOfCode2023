@@ -1,4 +1,3 @@
-// works but needs optimization
 using System.Text.RegularExpressions;
 
 var puzzles = File.ReadAllLines("input.txt").Select(l => {
@@ -14,7 +13,7 @@ class Puzzle
 
     private string parts;
     private int[] runs;
-    private int validLength;
+    private string valid;
 
     public override string ToString() => parts;
 
@@ -22,7 +21,7 @@ class Puzzle
     {
         parts = Simplify(input);
         this.runs = runs;
-        validLength = runs.Sum() + (runs.Length - 1);
+        valid = string.Join('.', runs.Select(r => new string('#', r)));
     }
 
     public int Solve()
@@ -32,7 +31,7 @@ class Puzzle
 
     private int SolveRecursive(string input)
     {
-        if (input.Length < validLength) return 0;
+        if (input.Length < valid.Length) return 0;
         if (mem.ContainsKey(input)) return mem[input];
 
         var result = 0;
@@ -42,40 +41,9 @@ class Puzzle
             result += SolveRecursive(Simplify(string.Concat(input.Select((c, i) => i == q ? '#' : c))));
             result += SolveRecursive(Simplify(string.Concat(input.Select((c, i) => i == q ? '.' : c))));
         }
-        else if (input.Length == validLength)
+        else if (input == valid)
         {
-            int ri = 0, run = 0;
-            for (int i = 0; i <= input.Length && result == 0; ++i)
-            {
-                char cur = i < input.Length ? input[i] : '.';
-                if (cur == '#')
-                {
-                    ++run;
-                }
-                else
-                {
-                    if (run == runs[ri])
-                    {
-                        ++ri;
-                        run = 0;
-                        if (ri == runs.Length)
-                        {
-                            if (i == input.Length)
-                            {
-                                result = 1;
-                            }
-                            else
-                            {
-                                break;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        break;
-                    }
-                }
-            }
+            result = 1;
         }
         mem.Add(input, result);
         return result;
