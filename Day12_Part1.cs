@@ -14,7 +14,7 @@ class Puzzle
     private string parts;
     private string valid;
 
-    public override string ToString() => parts;
+    private string Simplify(string input) => input.Trim('.').Select(x => x.ToString()).Aggregate((a, c) => a[^1] == '.' && c == "." ? a : a + c);
 
     public Puzzle(string input, int[] runs)
     {
@@ -45,10 +45,5 @@ class Puzzle
         }
         mem.Add(input, result);
         return result;
-    }
-
-    private string Simplify(string input)
-    {
-        return input.Trim('.').Select(x => x.ToString()).Aggregate((a, c) => a[^1] == '.' && c == "." ? a : a + c);
     }
 }
