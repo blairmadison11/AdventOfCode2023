@@ -1,11 +1,9 @@
 using System.Text.RegularExpressions;
 
-var puzzles = File.ReadAllLines("input.txt").Select(l => {
+Console.WriteLine(File.ReadAllLines("input.txt").Select(l => {
     var m = Regex.Match(l, @"([\#\.\?]+)\s+(?:(\d+),?)+");
     return new Puzzle(m.Groups[1].Value, m.Groups[2].Captures.Select(c => int.Parse(c.Value)).ToArray());
-}).ToList();
-
-Console.WriteLine(puzzles.Select(p => p.Solve()).Sum());
+}).Select(p => p.Solve()).Sum());
 
 class Puzzle
 {
