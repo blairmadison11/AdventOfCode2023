@@ -12,7 +12,6 @@ class Puzzle
     private Dictionary<string, int> mem = new Dictionary<string, int>();
 
     private string parts;
-    private int[] runs;
     private string valid;
 
     public override string ToString() => parts;
@@ -20,7 +19,6 @@ class Puzzle
     public Puzzle(string input, int[] runs)
     {
         parts = Simplify(input);
-        this.runs = runs;
         valid = string.Join('.', runs.Select(r => new string('#', r)));
     }
 
