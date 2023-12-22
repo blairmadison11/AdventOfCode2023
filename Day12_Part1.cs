@@ -49,6 +49,6 @@ class Puzzle
 
     private string Simplify(string input)
     {
-        return input.Trim('.').Select(x => x.ToString()).Aggregate((a, c) => a + (a[^1] == '.' && c == "." ? "" : c));
+        return input.Trim('.').Select(x => x.ToString()).Aggregate((a, c) => a[^1] == '.' && c == "." ? a : a + c);
     }
 }
