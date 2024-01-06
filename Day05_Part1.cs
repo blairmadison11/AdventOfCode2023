@@ -1,29 +1,14 @@
 using System.Text.RegularExpressions;
 
-var maps = new List<Func<long,long>>();
 var lines = File.ReadAllLines("input.txt");
-var seeds = Array.ConvertAll(Regex.Match(lines[0], @"seeds: (?:(\d+)\s*)+").Groups[1].Captures.ToArray(), c => long.Parse(c.Value));
+var locs = Regex.Matches(lines[0], @"\d+").Select(c => long.Parse(c.Value)).ToArray();
 for (var i = 2; i < lines.Length; ++i)
 {
-    if (lines[i].Contains("map"))
+    var rs = new List<long[]>();
+    for (++i; i < lines.Length && lines[i] != ""; ++i)
     {
-        var ranges = new List<long[]>();
-        for (var j = i + 1; j < lines.Length && lines[j] != ""; ++j)
-        {
-            ranges.Add(Array.ConvertAll(lines[j].Split(' '), s => long.Parse(s)));
-        }
-        maps.Add((long x) => { foreach (var range in ranges) if (x >= range[1] && x < range[1] + range[2]) return x + (range[0] - range[1]); return x; });
+        rs.Add(lines[i].Split(' ').Select(s => long.Parse(s)).ToArray());
     }
-}
-
-var locs = new List<long>();
-foreach (var seed in seeds)
-{
-    var loc = seed;
-    foreach (var map in maps)
-    {
-        loc = map(loc);
-    }
-    locs.Add(loc);
+    locs = locs.Select(l => { foreach (var r in rs) if (l >= r[1] && l < r[1] + r[2]) return l + (r[0] - r[1]); return l; }).ToArray();
 }
 Console.WriteLine(locs.Min());
